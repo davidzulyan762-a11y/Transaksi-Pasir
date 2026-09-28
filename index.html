@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Operasional Truk Pasir</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 40px;
+            background-color: #f4f6f9;
+        }
+
+        .container {
+            max-width: 500px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin: auto;
+        }
+
+        h2 {
+            text-align: center;
+            color: #1a73e8;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input:focus {
+            border-color: #1a73e8;
+            outline: none;
+        }
+
+        button {
+            background-color: #1a73e8;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #1557b0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Form Operasional Truk Pasir</h2>
+        <form id="trukForm">
+            <div class="form-group"><label>Tanggal:</label><input type="date" id="tanggal" required></div>
+            <div class="form-group"><label>Sumber Pasir:</label><input type="text" id="sumber_pasir"
+                    placeholder="Contoh: Indra, Bancar Jaya" required></div>
+            <div class="form-group"><label>Harga Beli Pasir (Rp):</label><input type="number" id="harga_beli"
+                    placeholder="Contoh: 400000" required></div>
+            <div class="form-group"><label>Tujuan Pengiriman:</label><input type="text" id="tujuan_pengiriman"
+                    placeholder="Contoh: Metro" required></div>
+            <div class="form-group"><label>Harga Jual (Rp):</label><input type="number" id="harga_jual"
+                    placeholder="Contoh: 1000000" required></div>
+            <div class="form-group"><label>BBM (Rp):</label><input type="number" id="bbm" placeholder="Contoh: 200000"
+                    required></div>
+            <div class="form-group"><label>Biaya Operasional (Rp):</label><input type="number" id="biaya_operasional"
+                    placeholder="Contoh: 550000" required></div>
+            <button type="submit">Simpan ke Google Sheets</button>
+        </form>
+    </div>
+
+    <script>
+        // ⚠️ GANTI TEKS DI BAWAH INI DENGAN LINK URL APLIKASI WEB YANG SUDAH ANDA SALIN TADI
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwwL8WnrwSG7jL_OaOnZH1xipWF-xYIoqFWdZk68uGEkhq-SPi-F8kHHT6h-GBugd8Pvg/exec ";
+
+        document.getElementById('trukForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const payload = {
+                tanggal: document.getElementById('tanggal').value,
+                sumber_pasir: document.getElementById('sumber_pasir').value,
+                harga_beli: document.getElementById('harga_beli').value,
+                tujuan_pengiriman: document.getElementById('tujuan_pengiriman').value,
+                harga_jual: document.getElementById('harga_jual').value,
+                bbm: document.getElementById('bbm').value,
+                biaya_operasional: document.getElementById('biaya_operasional').value
+            };
+
+            fetch(WEB_APP_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+                .then(() => {
+                    alert('Data Berhasil Ditambahkan ke Google Sheets!');
+                    document.getElementById('trukForm').reset();
+                })
+                .catch(error => {
+                    alert('Terjadi kesalahan: ' + error);
+                });
+        });
+    </script>
+
+</body>
+
+</html>
